@@ -1,0 +1,3337 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#fdfcfc">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="format-detection" content="telephone=no, address=no, email=no">
+  <title>이동현 | 게임 시스템 & 콘텐츠 기획자 포트폴리오</title>
+  
+  <!-- Fonts: Noto Sans KR, Inter, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* -------------------------------------------------------------
+       Design Tokens based on Refero Style (Classic Blue Refined)
+       Typography: Noto Sans KR (+2px increased for enhanced readability)
+       Palette: Eggshell (#fdfcfc), Warm Taupe (#f5f3f1), Stone (#ebe8e4),
+                Ink (#000000), Graphite (#2e2a25), Smoke (#524c46),
+                Ash (#9c948b), Classic Blue (#0062ff), Soft Blue (rgba(0, 98, 255, 0.08))
+    ------------------------------------------------------------- */
+    :root {
+      --bg-eggshell: #fdfcfc;
+      --surface-taupe: #f5f3f1;
+      --surface-taupe-hover: #ece9e5;
+      --surface-white: #ffffff;
+      
+      --border-stone: #ebe8e4;
+      --border-stone-strong: #dedad4;
+      
+      --text-ink: #000000;
+      --text-graphite: #2e2a25;
+      --text-smoke: #524c46;
+      --text-ash: #9c948b;
+      
+      /* 파란색 디자인 악센트 (주황색에서 파란색으로 전면 변경) */
+      --accent-blue: #0062ff;
+      --accent-blue-soft: rgba(0, 98, 255, 0.08);
+      --accent-blue-hover: #0050d4;
+      
+      --font-display: 'Noto Sans KR', 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      --font-body: 'Noto Sans KR', 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-card: 20px;
+      --radius-pill: 9999px;
+      
+      --container-max: 920px;
+      --header-height: 70px;
+    }
+
+    /* iOS & Safari Reset & Optimization */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    html {
+      font-size: 18px;
+      scroll-behavior: smooth;
+      background-color: var(--bg-eggshell);
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      background-color: var(--bg-eggshell);
+      color: var(--text-ink);
+      font-family: var(--font-body);
+      line-height: 1.68;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+      min-height: 100vh;
+      min-height: 100dvh;
+      padding-top: env(safe-area-inset-top);
+      padding-bottom: calc(env(safe-area-inset-bottom) + 96px);
+      padding-left: env(safe-area-inset-left);
+      padding-right: env(safe-area-inset-right);
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font-family: inherit;
+      border: none;
+      background: none;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* ---------------- Layout & Header ---------------- */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background-color: rgba(253, 252, 252, 0.94);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-stone);
+      transition: border-color 0.2s;
+    }
+
+    .header-inner {
+      max-width: var(--container-max);
+      margin: 0 auto;
+      height: var(--header-height);
+      padding: 0 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--text-ink);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* 파란색 디자인 펄스 닷 */
+    .blue-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background-color: var(--accent-blue);
+      box-shadow: 0 0 8px rgba(0, 98, 255, 0.65);
+      animation: blue-pulse 2.2s infinite ease-in-out;
+    }
+
+    @keyframes blue-pulse {
+      0%, 100% { transform: scale(1); opacity: 0.9; }
+      50% { transform: scale(1.3); opacity: 0.6; }
+    }
+
+    /* 헤더 우측 그룹 (헤더 버튼들 + 연락처 복사) */
+    .header-right-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+      flex: 1;
+      justify-content: flex-end;
+    }
+
+    /* 6개 항목 헤더 네비게이션 버튼 */
+    .header-nav {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      -webkit-overflow-scrolling: touch;
+      padding: 4px 2px;
+      max-width: 100%;
+    }
+
+    .header-nav::-webkit-scrollbar {
+      display: none;
+    }
+
+    .header-nav-btn {
+      white-space: nowrap;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--text-smoke);
+      background: var(--surface-taupe);
+      border: 1px solid var(--border-stone);
+      border-radius: var(--radius-pill);
+      padding: 6px 12px;
+      transition: all 0.15s ease;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .header-nav-btn:hover {
+      color: var(--text-ink);
+      background: var(--surface-taupe-hover);
+    }
+
+    .header-nav-btn.active {
+      color: #ffffff;
+      background: var(--text-ink);
+      border-color: var(--text-ink);
+    }
+
+    .header-cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--text-ink);
+      color: #fff;
+      font-size: 13.5px;
+      font-weight: 600;
+      padding: 7px 14px;
+      border-radius: var(--radius-pill);
+      transition: opacity 0.15s ease;
+      flex-shrink: 0;
+    }
+
+    .header-cta-btn:active {
+      opacity: 0.8;
+    }
+
+    /* ---------------- Container & Pages ---------------- */
+    .container {
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    /* 한 페이지에 한 항목씩만 표시되는 페이지 패널 */
+    .page-panel {
+      display: none;
+      padding: 36px 0 44px;
+      animation: pageFadeIn 0.22s ease-out;
+    }
+
+    .page-panel.active {
+      display: block;
+    }
+
+    @keyframes pageFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ---------------- Page Headers & Lead Box ---------------- */
+    .page-head {
+      margin-bottom: 26px;
+    }
+
+    .section-tag {
+      font-size: 12px;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-ash);
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .section-title {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--text-ink);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* 파란색 좌측 보더 리드 박스 */
+    .lead-box {
+      background-color: #fff;
+      border: 1px solid var(--border-stone);
+      border-left: 4px solid var(--accent-blue);
+      border-radius: var(--radius-md);
+      padding: 18px 20px;
+      margin-bottom: 24px;
+    }
+
+    .lead-title {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--text-ink);
+      margin-bottom: 6px;
+      letter-spacing: -0.01em;
+    }
+
+    .lead-desc {
+      font-size: 15px;
+      color: var(--text-smoke);
+      line-height: 1.6;
+    }
+
+    /* ---------------- 소제목 및 단락 분리 스타일 ---------------- */
+    .content-card-split {
+      background-color: var(--surface-white);
+      border: 1px solid var(--border-stone);
+      border-radius: var(--radius-card);
+      padding: 26px;
+      margin-bottom: 22px;
+    }
+
+    .content-sub-block {
+      margin-bottom: 22px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border-stone);
+    }
+
+    .content-sub-block:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .content-sub-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text-ink);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      letter-spacing: -0.01em;
+    }
+
+    .content-sub-title .sub-num-pill {
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--accent-blue);
+      background: var(--accent-blue-soft);
+      padding: 2px 8px;
+      border-radius: var(--radius-pill);
+      flex-shrink: 0;
+    }
+
+    .content-paragraph {
+      font-size: 15.5px;
+      color: var(--text-smoke);
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    /* ---------------- 1. 인적사항 페이지 전용 ---------------- */
+    .eyebrow-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 14px;
+      background-color: var(--surface-taupe);
+      border: 1px solid var(--border-stone);
+      border-radius: var(--radius-pill);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-graphite);
+      letter-spacing: 0.01em;
+    }
+
+    .badge-pill.status {
+      color: var(--accent-blue);
+      background-color: var(--accent-blue-soft);
+      border-color: rgba(0, 98, 255, 0.25);
+    }
+
+    .hero-logline {
+      font-size: 34px;
+      line-height: 1.28;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      color: var(--text-ink);
+      margin-bottom: 24px;
+    }
+
+    /* 파란색 하이라이트 */
+    .hero-logline .highlight {
+      color: var(--accent-blue);
+      display: inline-block;
+      position: relative;
+    }
+
+    .profile-card-full {
+      background: var(--surface-white);
+      border: 1px solid var(--border-stone);
+      border-radius: var(--radius-card);
+      padding: 28px;
+      margin-bottom: 24px;
+    }
+
+    .profile-card-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text-ink);
+      margin-bottom: 18px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-stone);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .profile-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px 24px;
+    }
+
+    @media (min-width: 600px) {
+      .profile-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 780px) {
+      .profile-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      background: var(--surface-taupe);
+      padding: 14px 16px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-stone);
+    }
+
+    .meta-label {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-ash);
+      font-family: var(--font-mono);
+    }
+
+    .meta-value {
+      font-size: 15.5px;
+      font-weight: 700;
+      color: var(--text-ink);
+    }
+
+    /* ---------------- 2. 핵심 무기 페이지 전용 ---------------- */
+    .weapons-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    @media (min-width: 680px) {
+      .weapons-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .weapon-card {
+      background: #ffffff;
+      border: 1px solid var(--border-stone);
+      border-radius: var(--radius-card);
+      padding: 20px 22px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+      transition: transform 0.15s ease, border-color 0.15s ease;
+    }
+
+    .weapon-card:hover {
+      border-color: var(--border-stone-strong);
+      transform: translateY(-2px);
+    }
+
+    .weapon-icon-box {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 14px;
+      height: 14px;
+      color: var(--accent-blue);
+      flex-shrink: 0;
+    }
+
+    .weapon-icon-box svg {
+      width: 14px;
+      height: 14px;
+      display: block;
+    }
+
+    .weapon-sentence {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-ink);
+      line-height: 1.5;
+      letter-spacing: -0.01em;
+      margin: 0;
+    }
+
+    /* ---------------- 3. 역량, 기술 페이지 전용 ---------------- */
+    .skills-category-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+
+    @media (min-width: 640px) {
+      .skills-category-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .skill-cat-card {
+      background: var(--surface-white);
+      border: 1px solid var(--border-stone);
+      border-radius: var(--radius-card);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .skill-cat-title {
+      font-size: 16.5px;
+      font-weight: 800;
+      color: var(--text-ink);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid var(--border-stone);
+      padding-bottom: 12px;
+    }
+
+    .skill-item-block {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .skill-item-block:last-of-type {
+      margin-bottom: 14px;
+    }
+
+    .skill-item-icon {
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border-stone);
+      margin-top: 1px;
+    }
+
+    .skill-item-icon svg {
+      width: 17px;
+      height: 17px;
+    }
+
+    .skill-item-text-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1;
+    }
+
+    .skill-item-subtitle {
+      font-size: 15.5px;
+      font-weight: 700;
+      color: var(--text-ink);
+      line-height: 1.4;
+      margin: 0;
+    }
+
+    .skill-item-paragraph {
+      font-size: 14px;
+      color: var(--text-smoke);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .tag-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 8px;
+      padding-top: 12px;
+      border-top: 1px dashed var(--border-stone);
+    }
+
+    .tag-item {
+      font-size: 13px;
+      color: var(--text-graphite);
+      background: var(--surface-taupe);
+      border: 1px solid var(--border-stone);
+      padding: 5px 11px;
+      border-radius: var(--radius-pill);
+      font-weight: 600;
+    }
+
+    .tag-item.highlight {
+      background: var(--text-ink);
+      color: #fff;
+      border-color: var(--text-ink);
+    }
+
+    /* ---------------- 4. 프로젝트 경험 페이지 전용 ---------------- */
+    .project-card {
+      background: var(--surface-white);
+      border: 1px solid var(--border-stone);
+      border-radius: var(--radius-card);
+      padding: 26px;
+      margin-bottom: 24px;
+    }
+
+    .project-header {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 18px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border-stone);
+    }
+
+    @media (min-width: 600px) {
+      .project-header {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+
+    .project-title-wrap h3 {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text-ink);
+      letter-spacing: -0.01em;
+    }
+
+    .project-role-badge {
+      display: inline-flex;
+      align-items: center;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-graphite);
+      background: var(--surface-taupe);
+      border: 1px solid var(--border-stone);
+      padding: 5px 12px;
+      border-radius: var(--radius-pill);
+      align-self: flex-start;
+    }
+
+    .project-sub-section {
+      margin-bottom: 18px;
+    }
+
+    .project-sub-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-ink);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .project-sub-desc {
+      font-size: 15px;
+      color: var(--text-smoke);
+      line-height: 1.68;
+      margin: 0;
+    }
+
+    .takeaway-box {
+      background-color: var(--surface-taupe);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      margin-top: 18px;
+    }
+
+    .takeaway-label {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--accent-blue);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    
+    /* ---------------- 참여 프로젝트 이미지 슬라이더 (5초 자동 전환) ---------------- */
+    .project-slider-container {
+      background: var(--surface-white);
+      border: 1px solid var(--border-stone);
+      border-radius: var(--radius-card);
+      padding: 24px;
+      margin-bottom: 28px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+    }
+
+    .project-slider-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .slider-title-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .slider-main-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--text-ink);
+      letter-spacing: -0.01em;
+      margin: 0;
+    }
+
+    .slider-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--accent-blue);
+      background: var(--accent-blue-soft);
+      border: 1px solid rgba(0, 98, 255, 0.2);
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+    }
+
+    .slider-controls-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .slider-page-counter {
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--text-smoke);
+      min-width: 44px;
+      text-align: right;
+    }
+
+    .slider-arrow-btns {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .slider-arrow-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--surface-taupe);
+      border: 1px solid var(--border-stone);
+      color: var(--text-graphite);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .slider-arrow-btn:hover {
+      background: var(--text-ink);
+      color: #fff;
+      border-color: var(--text-ink);
+      transform: scale(1.05);
+    }
+
+    .slider-arrow-btn:active {
+      transform: scale(0.95);
+    }
+
+    .project-slider-frame {
+      position: relative;
+      width: 100%;
+      height: 480px;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      background: #0d0e12;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+      user-select: none;
+    }
+
+    @media (max-width: 768px) {
+      .project-slider-container {
+        padding: 18px;
+      }
+      .project-slider-frame {
+        height: 380px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .project-slider-container {
+        padding: 14px;
+      }
+      .project-slider-frame {
+        height: 320px;
+      }
+    }
+
+    .slider-progress-track {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3.5px;
+      background: rgba(255, 255, 255, 0.15);
+      z-index: 20;
+    }
+
+    .slider-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--accent-blue);
+      box-shadow: 0 0 10px rgba(0, 98, 255, 0.9);
+      transition: width 0.05s linear;
+    }
+
+    .slider-slides-wrapper {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .slider-slide-item {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.65s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.65s;
+      z-index: 1;
+    }
+
+    .slider-slide-item.active {
+      opacity: 1;
+      visibility: visible;
+      z-index: 2;
+    }
+
+    .slide-image-backdrop {
+      position: absolute;
+      inset: -20px;
+      background-size: cover;
+      background-position: center;
+      filter: blur(34px) brightness(0.42) saturate(1.25);
+      transform: scale(1.12);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .slide-image-element {
+      position: relative;
+      z-index: 3;
+      max-width: 95%;
+      max-height: 88%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 12px 38px rgba(0, 0, 0, 0.6);
+      transition: transform 0.4s ease;
+    }
+
+    .slide-meta-overlay {
+      position: absolute;
+      bottom: 18px;
+      left: 18px;
+      right: 120px;
+      z-index: 10;
+      background: rgba(12, 14, 18, 0.85);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: var(--radius-md);
+      padding: 12px 18px;
+      color: #fff;
+      pointer-events: none;
+      max-width: 540px;
+    }
+
+    @media (max-width: 640px) {
+      .slide-meta-overlay {
+        right: 18px;
+        bottom: 48px;
+        padding: 10px 14px;
+      }
+    }
+
+    .slide-meta-badge {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      color: #60a5fa;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    .slide-meta-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.3;
+    }
+
+    .slide-meta-desc {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.82);
+      margin-top: 3px;
+      line-height: 1.45;
+    }
+
+    .slider-dot-indicators {
+      position: absolute;
+      bottom: 18px;
+      right: 18px;
+      z-index: 12;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(0, 0, 0, 0.45);
+      padding: 7px 12px;
+      border-radius: var(--radius-pill);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    @media (max-width: 640px) {
+      .slider-dot-indicators {
+        right: 50%;
+        transform: translateX(50%);
+        bottom: 12px;
+      }
+    }
+
+    .slider-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.4);
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .slider-dot:hover {
+      background: rgba(255, 255, 255, 0.85);
+    }
+
+    .slider-dot.active {
+      width: 24px;
+      border-radius: var(--radius-pill);
+      background: var(--accent-blue);
+      box-shadow: 0 0 8px rgba(0, 98, 255, 0.8);
+    }
+
+    /* ---------------- 페이지 하단 이동 내비게이션 ---------------- */
+    .page-footer-nav {
+      margin-top: 36px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border-stone);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .page-nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14.5px;
+      font-weight: 600;
+      color: var(--text-graphite);
+      background: var(--surface-white);
+      border: 1px solid var(--border-stone);
+      padding: 10px 18px;
+      border-radius: var(--radius-pill);
+      transition: all 0.15s ease;
+      cursor: pointer;
+    }
+
+    .page-nav-link:hover {
+      background: var(--text-ink);
+      color: #fff;
+      border-color: var(--text-ink);
+    }
+
+    .page-nav-link.next {
+      margin-left: auto;
+      background: var(--surface-taupe);
+    }
+
+    /* ---------------- Footer ---------------- */
+    .footer {
+      padding: 48px 0 24px;
+      border-top: 1px solid var(--border-stone);
+      text-align: center;
+    }
+
+    .footer-logline {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text-graphite);
+      margin-bottom: 12px;
+    }
+
+    .footer-copy {
+      font-size: 13px;
+      color: var(--text-ash);
+      font-family: var(--font-mono);
+    }
+
+    /* ---------------- Floating Scroll Navigator ---------------- */
+    .scroll-nav-widget {
+      position: fixed;
+      right: 20px;
+      bottom: calc(env(safe-area-inset-bottom) + 88px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: rgba(253, 252, 252, 0.94);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border-stone);
+      border-radius: var(--radius-pill);
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
+      z-index: 990;
+      padding: 5px;
+      gap: 3px;
+    }
+
+    @media (min-width: 768px) {
+      .scroll-nav-widget {
+        right: 32px;
+        bottom: 36px;
+      }
+    }
+
+    .scroll-nav-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-ink);
+      background: transparent;
+      transition: all 0.15s ease;
+    }
+
+    .scroll-nav-btn:hover {
+      background-color: var(--surface-taupe);
+      color: var(--accent-blue);
+      transform: scale(1.08);
+    }
+
+    .scroll-nav-btn:active {
+      transform: scale(0.92);
+      background-color: var(--border-stone);
+    }
+
+    .scroll-nav-divider {
+      width: 22px;
+      height: 1px;
+      background-color: var(--border-stone);
+    }
+
+    /* ---------------- Mobile Safari Bottom Floating Bar ---------------- */
+    .floating-bar {
+      position: fixed;
+      bottom: calc(env(safe-area-inset-bottom) + 16px);
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 32px);
+      max-width: 460px;
+      background: rgba(0, 0, 0, 0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: var(--radius-pill);
+      padding: 8px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      z-index: 999;
+    }
+
+    .floating-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-left: 6px;
+    }
+
+    .floating-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .floating-sub {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.65);
+    }
+
+    .floating-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .floating-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 8px 15px;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: var(--radius-pill);
+      transition: opacity 0.15s ease;
+      text-decoration: none;
+    }
+
+    /* 파란색 주요 버튼 */
+    .floating-btn.primary {
+      background: var(--accent-blue);
+      color: #fff;
+    }
+
+    .floating-btn.secondary {
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+    }
+
+    .floating-btn:active {
+      opacity: 0.8;
+    }
+
+    /* ---------------- Toast Notification ---------------- */
+    .toast {
+      position: fixed;
+      top: 24px;
+      left: 50%;
+      transform: translate(-50%, -20px);
+      background: #000;
+      color: #fff;
+      padding: 10px 22px;
+      border-radius: var(--radius-pill);
+      font-size: 14px;
+      font-weight: 600;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 1000;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+  
+    /* ============================================================
+       관리자 모드 & 마크다운 에디터 시스템
+       비밀번호: 1384 | localStorage 영구 저장
+    ============================================================ */
+
+    /* 관리자 버튼 (헤더 우측) */
+    .admin-toggle-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 13px;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: inherit;
+      color: var(--text-smoke);
+      background: var(--surface-taupe);
+      border: 1px solid var(--border-stone);
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+      transition: all 0.18s ease;
+      flex-shrink: 0;
+    }
+    .admin-toggle-btn:hover {
+      background: var(--surface-taupe-hover);
+      color: var(--text-graphite);
+    }
+    .admin-toggle-btn.logged-in {
+      color: var(--accent-blue);
+      background: var(--accent-blue-soft);
+      border-color: rgba(0, 98, 255, 0.25);
+    }
+
+    /* 관리자 전용 편집 버튼 (각 page-head 내) */
+    .admin-edit-page-btn {
+      display: none;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 12px;
+      font-size: 12.5px;
+      font-weight: 600;
+      font-family: inherit;
+      color: var(--accent-blue);
+      background: var(--accent-blue-soft);
+      border: 1px solid rgba(0, 98, 255, 0.2);
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      margin-left: auto;
+    }
+    .admin-mode-active .admin-edit-page-btn {
+      display: inline-flex;
+    }
+    .admin-edit-page-btn:hover {
+      background: var(--accent-blue);
+      color: #fff;
+      border-color: var(--accent-blue);
+    }
+
+    /* 관리자 모드 활성 시 page-head를 flex로 */
+    .admin-mode-active .page-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    /* 모달 오버레이 공통 */
+    .admin-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.22s ease;
+    }
+    .admin-modal-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    /* 로그인 모달 */
+    .admin-login-modal {
+      background: var(--bg-eggshell);
+      border: 1px solid var(--border-stone);
+      border-radius: var(--radius-card);
+      padding: 36px 32px 28px;
+      width: 100%;
+      max-width: 380px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
+      transform: translateY(24px) scale(0.97);
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      text-align: center;
+    }
+    .admin-modal-overlay.open .admin-login-modal {
+      transform: translateY(0) scale(1);
+    }
+    .admin-login-icon {
+      width: 52px;
+      height: 52px;
+      background: var(--accent-blue-soft);
+      border: 1px solid rgba(0, 98, 255, 0.2);
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      color: var(--accent-blue);
+    }
+    .admin-login-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text-ink);
+      margin-bottom: 6px;
+    }
+    .admin-login-desc {
+      font-size: 14px;
+      color: var(--text-smoke);
+      margin-bottom: 22px;
+    }
+    .admin-pin-input-wrap {
+      position: relative;
+      margin-bottom: 14px;
+    }
+    .admin-pin-input {
+      width: 100%;
+      padding: 13px 18px;
+      font-size: 20px;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      letter-spacing: 0.3em;
+      text-align: center;
+      color: var(--text-ink);
+      background: var(--surface-white);
+      border: 1.5px solid var(--border-stone-strong);
+      border-radius: var(--radius-md);
+      outline: none;
+      transition: border-color 0.15s;
+      -webkit-text-security: disc;
+    }
+    .admin-pin-input:focus {
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 0 3px rgba(0, 98, 255, 0.12);
+    }
+    .admin-pin-input.error {
+      border-color: #ef4444;
+      animation: pinShake 0.4s ease;
+    }
+    @keyframes pinShake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-8px); }
+      40%, 80% { transform: translateX(8px); }
+    }
+    .admin-pin-error-msg {
+      font-size: 13px;
+      color: #ef4444;
+      min-height: 18px;
+      margin-bottom: 16px;
+      font-weight: 600;
+    }
+    .admin-login-btn {
+      width: 100%;
+      padding: 13px;
+      font-size: 15px;
+      font-weight: 700;
+      font-family: inherit;
+      color: #fff;
+      background: var(--accent-blue);
+      border: none;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+    }
+    .admin-login-btn:hover { background: var(--accent-blue-hover); }
+    .admin-login-btn:active { transform: scale(0.98); }
+    .admin-cancel-link {
+      display: block;
+      margin-top: 14px;
+      font-size: 13px;
+      color: var(--text-ash);
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-family: inherit;
+      text-decoration: underline;
+    }
+    .admin-cancel-link:hover { color: var(--text-smoke); }
+
+    /* 에디터 모달 */
+    .admin-editor-modal {
+      background: var(--bg-eggshell);
+      border: 1px solid var(--border-stone);
+      border-radius: var(--radius-card);
+      width: 100%;
+      max-width: 1100px;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.22);
+      transform: translateY(28px) scale(0.97);
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow: hidden;
+    }
+    .admin-modal-overlay.open .admin-editor-modal {
+      transform: translateY(0) scale(1);
+    }
+
+    .editor-modal-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 22px 16px;
+      border-bottom: 1px solid var(--border-stone);
+      flex-shrink: 0;
+      flex-wrap: wrap;
+    }
+    .editor-modal-header-title {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--text-ink);
+      flex-shrink: 0;
+    }
+    .editor-tab-select {
+      padding: 6px 12px;
+      font-size: 13.5px;
+      font-weight: 600;
+      font-family: inherit;
+      color: var(--text-graphite);
+      background: var(--surface-taupe);
+      border: 1px solid var(--border-stone);
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+      outline: none;
+    }
+    .editor-modal-spacer { flex: 1; }
+    .editor-reset-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 13px;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: inherit;
+      color: #ef4444;
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .editor-reset-btn:hover { background: #fee2e2; }
+    .editor-close-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1px solid var(--border-stone);
+      background: var(--surface-taupe);
+      color: var(--text-graphite);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 18px;
+      line-height: 1;
+      font-family: inherit;
+      transition: all 0.15s;
+      flex-shrink: 0;
+    }
+    .editor-close-btn:hover { background: var(--text-ink); color: #fff; }
+
+    .editor-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 10px 22px;
+      border-bottom: 1px solid var(--border-stone);
+      background: var(--surface-taupe);
+      flex-shrink: 0;
+      flex-wrap: wrap;
+    }
+    .editor-toolbar-label {
+      font-size: 11.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-ash);
+      margin-right: 6px;
+    }
+    .toolbar-btn {
+      padding: 4px 10px;
+      font-size: 12.5px;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      color: var(--text-graphite);
+      background: var(--surface-white);
+      border: 1px solid var(--border-stone);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.12s;
+      white-space: nowrap;
+    }
+    .toolbar-btn:hover { background: var(--text-ink); color: #fff; border-color: var(--text-ink); }
+
+    .editor-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      flex: 1;
+      overflow: hidden;
+      min-height: 0;
+    }
+    @media (max-width: 700px) {
+      .editor-body { grid-template-columns: 1fr; }
+      .editor-preview-pane { display: none; }
+    }
+
+    .editor-input-pane {
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid var(--border-stone);
+      overflow: hidden;
+    }
+    .editor-pane-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-ash);
+      padding: 8px 16px 6px;
+      background: var(--surface-taupe);
+      border-bottom: 1px solid var(--border-stone);
+      flex-shrink: 0;
+    }
+    .editor-textarea {
+      flex: 1;
+      width: 100%;
+      padding: 18px 20px;
+      font-size: 14px;
+      font-family: var(--font-mono);
+      line-height: 1.75;
+      color: var(--text-graphite);
+      background: var(--surface-white);
+      border: none;
+      outline: none;
+      resize: none;
+      tab-size: 2;
+    }
+    .editor-preview-pane {
+      overflow-y: auto;
+      background: var(--bg-eggshell);
+    }
+    .editor-preview-pane .editor-pane-label {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+    }
+    .editor-preview-inner {
+      padding: 20px 24px 30px;
+      font-size: 15.5px;
+      line-height: 1.72;
+      color: var(--text-graphite);
+    }
+    /* 프리뷰 내부 렌더링 스타일 */
+    .editor-preview-inner .prev-lead-box {
+      background: var(--surface-white);
+      border: 1px solid var(--border-stone);
+      border-left: 4px solid var(--accent-blue);
+      border-radius: var(--radius-md);
+      padding: 15px 18px;
+      margin-bottom: 18px;
+      font-size: 15px;
+      color: var(--text-ink);
+    }
+    .editor-preview-inner .prev-h2 {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text-ink);
+      margin: 18px 0 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .editor-preview-inner .prev-num-pill {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent-blue);
+      background: var(--accent-blue-soft);
+      padding: 2px 8px;
+      border-radius: 99px;
+    }
+    .editor-preview-inner .prev-h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-ink);
+      margin: 14px 0 6px;
+    }
+    .editor-preview-inner .prev-p {
+      color: var(--text-smoke);
+      margin: 0 0 12px;
+      font-size: 15px;
+    }
+    .editor-preview-inner .prev-hr {
+      border: none;
+      border-top: 1px solid var(--border-stone);
+      margin: 16px 0;
+    }
+    .editor-preview-inner .prev-li {
+      padding-left: 16px;
+      position: relative;
+      margin-bottom: 6px;
+      font-size: 15px;
+      color: var(--text-smoke);
+    }
+    .editor-preview-inner .prev-li::before {
+      content: '•';
+      position: absolute;
+      left: 2px;
+      color: var(--accent-blue);
+      font-weight: 700;
+    }
+    .editor-preview-inner strong { color: var(--text-ink); font-weight: 700; }
+    .editor-preview-inner em { font-style: italic; color: var(--text-graphite); }
+
+    .editor-modal-footer {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      padding: 14px 22px;
+      border-top: 1px solid var(--border-stone);
+      background: var(--surface-taupe);
+      flex-shrink: 0;
+    }
+    .editor-cancel-btn {
+      padding: 10px 20px;
+      font-size: 14px;
+      font-weight: 600;
+      font-family: inherit;
+      color: var(--text-graphite);
+      background: var(--surface-white);
+      border: 1px solid var(--border-stone);
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .editor-cancel-btn:hover { background: var(--surface-taupe-hover); }
+    .editor-save-btn {
+      padding: 10px 24px;
+      font-size: 14px;
+      font-weight: 700;
+      font-family: inherit;
+      color: #fff;
+      background: var(--accent-blue);
+      border: none;
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .editor-save-btn:hover { background: var(--accent-blue-hover); }
+    .editor-save-btn:active { transform: scale(0.98); }
+
+    /* 관리자 활성 알림 배너 */
+    .admin-active-bar {
+      display: none;
+      position: fixed;
+      bottom: calc(env(safe-area-inset-bottom) + 136px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent-blue);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 8px 20px;
+      border-radius: var(--radius-pill);
+      z-index: 950;
+      white-space: nowrap;
+      box-shadow: 0 8px 22px rgba(0, 98, 255, 0.35);
+      pointer-events: none;
+    }
+    .admin-mode-active .admin-active-bar { display: block; }
+
+  </style>
+</head>
+<body>
+
+  <!-- Top Sticky Header with Navigation Buttons -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="brand" onclick="navigateTo('profile')">
+        <span class="blue-dot" aria-hidden="true"></span>
+        <span>이동현 기획자</span>
+      </div>
+
+      <div class="header-right-group">
+        <!-- 6개 항목 헤더 버튼 (연락처 복사 좌측 배치) -->
+        <nav class="header-nav" aria-label="메인 메뉴">
+          <button type="button" class="header-nav-btn active" data-page="profile" onclick="navigateTo('profile')">인적사항</button>
+          <button type="button" class="header-nav-btn" data-page="weapons" onclick="navigateTo('weapons')">핵심 무기</button>
+          <button type="button" class="header-nav-btn" data-page="motivation" onclick="navigateTo('motivation')">지원동기</button>
+          <button type="button" class="header-nav-btn" data-page="skills" onclick="navigateTo('skills')">역량, 기술</button>
+          <button type="button" class="header-nav-btn" data-page="projects" onclick="navigateTo('projects')">프로젝트 경험</button>
+          <button type="button" class="header-nav-btn" data-page="vision" onclick="navigateTo('vision')">목표, 포부</button>
+        </nav>
+
+        <!-- 관리자 편집 모드 버튼 -->
+        <button class="admin-toggle-btn" id="adminToggleBtn" onclick="openAdminLogin()">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span id="adminBtnLabel">관리자 수정</span>
+        </button>
+        <!-- 연락처 복사 버튼 -->
+        <button class="header-cta-btn" onclick="copyContact('010-6552-4426')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+          <span>연락처 복사</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- ========================================================
+         PAGE 1: 인적사항 (Profile)
+         ======================================================== -->
+    <article class="page-panel active" id="page-profile">
+      <!-- 관리자 전용: 인적사항 편집 버튼 -->
+      <button class="admin-edit-page-btn" onclick="openAdminEditor('profile')" style="margin-bottom:14px;">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        이 페이지 편집
+      </button>
+      <div class="eyebrow-wrap">
+        <span class="badge-pill status">
+          <span class="blue-dot" style="width:7px; height:7px;"></span>
+          신입 게임 기획자 지원
+        </span>
+        <span class="badge-pill">희망직군 : 시스템 기획 · 콘텐츠 기획</span>
+      </div>
+
+      <h1 class="hero-logline">
+        기회를 엿보며 타오를 날만을 기다리는<br>
+        <span class="highlight">불씨와도 같은 기획자</span>
+      </h1>
+
+      <!-- 인적사항 상세 카드 -->
+      <div class="profile-card-full">
+        <div class="profile-card-title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          기본 인적사항 및 지원 정보
+        </div>
+        <div class="profile-grid">
+          <div class="meta-item">
+            <span class="meta-label">NAME</span>
+            <span class="meta-value">이동현 (만 30세, 1996.06)</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">LOCATION</span>
+            <span class="meta-value">경기도 군포시 금정동</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">CONTACT</span>
+            <span class="meta-value">010-6552-4426</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">MILITARY</span>
+            <span class="meta-value">사회복무요원 소집 해제</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">ROLE</span>
+            <span class="meta-value">시스템 기획 / 콘텐츠 기획</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">SALARY</span>
+            <span class="meta-value">회사 내규에 따름 (협의 후 결정)</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">CERTIFICATE</span>
+            <span class="meta-value">컴활 엑셀 2급 / 한국사 3급</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">AWARDS / ACTIVITY</span>
+            <span class="meta-value">노블엔진 제11회 라이트노벨 공모전 출품</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">CAREER (WORK)</span>
+            <span class="meta-value">GS25 가맹점 11개월 / 제약사 1개월</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="page-footer-nav">
+        <button type="button" class="page-nav-link next" onclick="navigateTo('weapons')">
+          <span>다음: 핵심 무기</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </button>
+      </div>
+    </article>
+
+
+    <!-- ========================================================
+         PAGE 2: 핵심 무기 (Core Competencies)
+         ======================================================== -->
+    <article class="page-panel" id="page-weapons">
+      <div class="page-head">
+        <span class="section-tag">CORE COMPETENCIES</span>
+        <h2 class="section-title">나의 핵심 무기 6가지</h2>
+        <button class="admin-edit-page-btn" onclick="openAdminEditor('weapons')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> 이 페이지 편집</button>
+      </div>
+
+      <div class="lead-box">
+        <div class="lead-title">💡 두괄식 핵심 요약</div>
+        <div class="lead-desc">단순한 상상에 그치지 않고 개발자가 이해하고 구현 가능한 기획서를 작성하며, 팀원의 공백까지 메우는 주도적 실행력을 갖추고 있습니다.</div>
+      </div>
+
+      <div class="md-edit-zone" id="weapons-md-zone" style="display:none;margin-bottom:24px;"></div>
+      <div class="weapons-grid" id="weaponsOriginalGrid">
+        <!-- 무기 1 -->
+        <div class="weapon-card">
+          <span class="weapon-icon-box" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/>
+            </svg>
+          </span>
+          <p class="weapon-sentence">01. 개발자 맞춤형 기획 설계</p>
+        </div>
+
+        <!-- 무기 2 -->
+        <div class="weapon-card">
+          <span class="weapon-icon-box" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10"/><path d="M6 10h10"/>
+            </svg>
+          </span>
+          <p class="weapon-sentence">02. 스토리&세계관 구조 설계 특화</p>
+        </div>
+
+        <!-- 무기 3 -->
+        <div class="weapon-card">
+          <span class="weapon-icon-box" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+            </svg>
+          </span>
+          <p class="weapon-sentence">03. 주도적인 팀원 케어</p>
+        </div>
+
+        <!-- 무기 4 -->
+        <div class="weapon-card">
+          <span class="weapon-icon-box" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="6" x2="10" y1="12" y2="12"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="15" x2="15.01" y1="13" y2="13"/><line x1="18" x2="18.01" y1="11" y2="11"/><rect width="20" height="12" x="2" y="6" rx="2"/>
+            </svg>
+          </span>
+          <p class="weapon-sentence">04. 깊이 있게 플레이한 게임 분석</p>
+        </div>
+
+        <!-- 무기 5 -->
+        <div class="weapon-card">
+          <span class="weapon-icon-box" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+            </svg>
+          </span>
+          <p class="weapon-sentence">05. 실무 도구 및 최신 기술 사용 경험</p>
+        </div>
+
+        <!-- 무기 6 -->
+        <div class="weapon-card">
+          <span class="weapon-icon-box" aria-hidden="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>
+            </svg>
+          </span>
+          <p class="weapon-sentence">콘텐츠 특화 기획 경험</p>
+        </div>
+      </div>
+
+      <div class="page-footer-nav">
+        <button type="button" class="page-nav-link" onclick="navigateTo('profile')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+          <span>이전: 인적사항</span>
+        </button>
+        <button type="button" class="page-nav-link next" onclick="navigateTo('motivation')">
+          <span>다음: 지원동기</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </button>
+      </div>
+    </article>
+
+
+    <!-- ========================================================
+         PAGE 3: 지원동기 (Motivation) - 소제목 & 단락 분리
+         ======================================================== -->
+    <article class="page-panel" id="page-motivation">
+      <div class="page-head">
+        <span class="section-tag">MOTIVATION</span>
+        <h2 class="section-title">지원 동기</h2>
+        <button class="admin-edit-page-btn" onclick="openAdminEditor('motivation')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> 이 페이지 편집</button>
+      </div>
+
+      <!-- 두괄식 리드 박스 -->
+      <div class="lead-box">
+        <div class="lead-title">🔥 "거대한 불꽃과 같은 귀사에서, 작은 불씨를 던져 함께 활활 타오르고자 합니다."</div>
+        <div class="lead-desc">기회를 엿보며 조용히 내실을 다져온 불씨로서, 귀사의 든든한 일원이 되어 폭발적인 시너지를 내겠습니다.</div>
+      </div>
+
+      <!-- 소제목과 단락으로 명확히 구분된 본문 카드 -->
+      <div class="content-card-split">
+        <div class="content-sub-block">
+          <h3 class="content-sub-title">
+            <span class="sub-num-pill">01</span>
+            기회를 엿보며 내실을 다져온 불씨의 여정
+          </h3>
+          <p class="content-paragraph">
+            저는 어릴 적부터 지금까지 성실히 때를 준비하며 기회를 엿보아온 사람입니다. 게임 업계의 수많은 성공 신화 역시 작은 불씨를 끝까지 포기하지 않고 지켜내어 마침내 활활 피워 올린 도전의 결과라고 확신합니다. 저 역시 묵묵히 내실을 다지며 때를 기다려 왔습니다.
+          </p>
+        </div>
+
+        <div class="content-sub-block">
+          <h3 class="content-sub-title">
+            <span class="sub-num-pill">02</span>
+            기본기부터 탄탄한 콘텐츠 기획자로의 출발
+          </h3>
+          <p class="content-paragraph">
+            궁극적으로는 유저들의 심금을 울리는 서사를 빚어내는 시나리오 기획자가 되는 것이 저의 오랜 꿈입니다. 하지만 그 꿈에 도달하기에 앞서, 소중한 기회를 주신 귀사에서 시스템과 콘텐츠 기획의 가장 본질적인 기본기부터 충실히 다지며 성장해 나가는 것이 올바른 시작이라고 굳게 믿고 있습니다.
+          </p>
+        </div>
+
+        <div class="content-sub-block">
+          <h3 class="content-sub-title">
+            <span class="sub-num-pill">03</span>
+            지원을 위해 준비해 온 실전 협업 기술
+          </h3>
+          <p class="content-paragraph">
+            귀사에 지원하기 위해 다양한 실무 기술을 꾸준히 연마해 왔습니다. MS Office를 활용한 데이터 설계 및 명세서 문서화, Unity 엔진 환경 적응, 최신 생성형 AI 기술을 활용한 리서치 효율화, 그리고 다수의 프로젝트를 통해 협업의 기본기를 단단히 다졌습니다.
+          </p>
+        </div>
+
+        <div class="content-sub-block">
+          <h3 class="content-sub-title">
+            <span class="sub-num-pill">04</span>
+            겸손한 자각과 아낌없는 헌신
+          </h3>
+          <p class="content-paragraph">
+            스스로 아직 채워야 할 점이 많은 신입임을 냉철하게 인지하고 있습니다. 선배 동료들의 조언을 스펀지처럼 흡수하며 빠르게 성장하겠습니다. 거대한 불꽃과도 같은 귀사와 함께한다면, 작은 불씨 같은 제 자신을 한몸 던져 프로젝트를 위해 활활 타오를 수 있기를 간절히 희망합니다.
+          </p>
+        </div>
+      </div>
+
+      <div class="page-footer-nav">
+        <button type="button" class="page-nav-link" onclick="navigateTo('weapons')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+          <span>이전: 핵심 무기</span>
+        </button>
+        <button type="button" class="page-nav-link next" onclick="navigateTo('skills')">
+          <span>다음: 역량, 기술</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </button>
+      </div>
+    </article>
+
+
+    <!-- ========================================================
+         PAGE 4: 역량, 기술 (Skills & Capabilities) - 소제목 & 단락 분리
+         ======================================================== -->
+    <article class="page-panel" id="page-skills">
+      <div class="page-head">
+        <span class="section-tag">SKILLS & CAPABILITIES</span>
+        <h2 class="section-title">역량, 기술</h2>
+        <button class="admin-edit-page-btn" onclick="openAdminEditor('skills')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> 이 페이지 편집</button>
+      </div>
+
+      <!-- 두괄식 리드 박스 -->
+      <div class="lead-box">
+        <div class="lead-title">⚡ 소통 기반의 협업과 실무 툴, 하드코어 플레이 경험의 결합</div>
+        <div class="lead-desc">단순 수치 입력이 아닌 '개발 구현성'과 '유저의 손맛'을 연결하는 다각도의 기획 기반을 갖추고 있습니다.</div>
+      </div>
+
+      <div class="md-edit-zone" id="skills-md-zone" style="display:none;margin-bottom:24px;"></div>
+      <div class="skills-category-grid" id="skillsOriginalGrid">
+        <!-- 1. 기획 문서화 & 사무 도구 -->
+        <div class="skill-cat-card">
+          <div class="skill-cat-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+            기획 문서화 & 사무 도구
+          </div>
+
+          <div class="skill-item-block">
+            <span class="skill-item-icon" aria-label="MS Excel" style="color: #107c41; background: #eef8f2; border-color: #d1ebd8;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>
+                <line x1="3" x2="21" y1="9" y2="9"/>
+                <line x1="3" x2="21" y1="15" y2="15"/>
+                <line x1="9" x2="9" y1="3" y2="21"/>
+                <line x1="15" x2="15" y1="3" y2="21"/>
+              </svg>
+            </span>
+            <div class="skill-item-text-wrap">
+              <h4 class="skill-item-subtitle">MS Excel 기반 데이터 테이블 설계 (컴활 2급)</h4>
+              <p class="skill-item-paragraph">수식과 함수를 활용한 구조화된 데이터 시트를 구축하고, 인게임 수치 밸런싱의 오차를 사전에 검증합니다.</p>
+            </div>
+          </div>
+
+          <div class="skill-item-block">
+            <span class="skill-item-icon" aria-label="MS Word / PowerPoint" style="color: #185abd; background: #eef4fc; border-color: #d2e3f8;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+                <polyline points="14 2 14 8 20 8"/>
+                <line x1="16" x2="8" y1="13" y2="13"/>
+                <line x1="16" x2="8" y1="17" y2="17"/>
+                <line x1="10" x2="8" y1="9" y2="9"/>
+              </svg>
+            </span>
+            <div class="skill-item-text-wrap">
+              <h4 class="skill-item-subtitle">MS Word / PowerPoint 기반 기능 명세서 제작</h4>
+              <p class="skill-item-paragraph">개발자와 아티스트가 한눈에 기획 의도와 예외 처리 로직을 직관적으로 파악할 수 있는 표준 문서를 작성합니다.</p>
+            </div>
+          </div>
+
+          <div class="tag-cloud">
+            <span class="tag-item highlight">Excel 2급</span>
+            <span class="tag-item">Word 명세서</span>
+            <span class="tag-item">PowerPoint</span>
+            <span class="tag-item">한국사 3급</span>
+          </div>
+        </div>
+
+        <!-- 2. 개발 엔진 & AI 기술 -->
+        <div class="skill-cat-card">
+          <div class="skill-cat-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+            개발 엔진 & AI 기술 활용
+          </div>
+
+          <div class="skill-item-block">
+            <span class="skill-item-icon" aria-label="Unity Engine" style="color: #222222; background: #f3f3f3; border-color: #dedede;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                <line x1="12" x2="12" y1="22.08" y2="12"/>
+              </svg>
+            </span>
+            <div class="skill-item-text-wrap">
+              <h4 class="skill-item-subtitle">Unity Engine 환경 검토 및 로직 협의</h4>
+              <p class="skill-item-paragraph">엔진 기본 구조를 이해하고 기획된 시스템 로직이 인게임에서 원활히 구현 가능한지 개발자와 조율합니다.</p>
+            </div>
+          </div>
+
+          <div class="skill-item-block">
+            <span class="skill-item-icon" aria-label="AI 기술 접목" style="color: #7928ca; background: #f8f0ff; border-color: #ecd5fa;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/>
+              </svg>
+            </span>
+            <div class="skill-item-text-wrap">
+              <h4 class="skill-item-subtitle">생성형 AI 접목을 통한 기획 생산성 고도화</h4>
+              <p class="skill-item-paragraph">기획 아이디어의 빠른 시각화, 시장 레퍼런스 분석, 초안 산출의 소요 시간을 획기적으로 단축합니다.</p>
+            </div>
+          </div>
+
+          <div class="tag-cloud">
+            <span class="tag-item highlight">Unity</span>
+            <span class="tag-item highlight">Generative AI</span>
+            <span class="tag-item">로직 협의</span>
+          </div>
+        </div>
+
+        <!-- 3. 협업 & 소프트스킬 -->
+        <div class="skill-cat-card">
+          <div class="skill-cat-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            협업 & 소프트스킬
+          </div>
+
+          <div class="skill-item-block">
+            <span class="skill-item-icon" aria-label="상호 협의 중심 소통" style="color: #0284c7; background: #f0f9ff; border-color: #bae6fd;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+              </svg>
+            </span>
+            <div class="skill-item-text-wrap">
+              <h4 class="skill-item-subtitle">상호 협의 중심의 적극적 소통 프로세스</h4>
+              <p class="skill-item-paragraph">모르는 영역은 적극적으로 묻고 협의하여 기획 오차를 조기에 차단하고 최선의 합의점을 찾습니다.</p>
+            </div>
+          </div>
+
+          <div class="skill-item-block">
+            <span class="skill-item-icon" aria-label="서사/스토리 설계" style="color: #ea580c; background: #fff7ed; border-color: #ffedd5;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
+                <path d="M6 6h10"/>
+                <path d="M6 10h10"/>
+              </svg>
+            </span>
+            <div class="skill-item-text-wrap">
+              <h4 class="skill-item-subtitle">서사 구조화 및 세계관 내러티브 설계</h4>
+              <p class="skill-item-paragraph">노블엔진 공모전 참여 경험을 살려 유저의 감정을 몰입시키는 스토리 플롯과 세계관 설정을 구체화합니다.</p>
+            </div>
+          </div>
+
+          <div class="tag-cloud">
+            <span class="tag-item">적극적 소통</span>
+            <span class="tag-item">시나리오 구조화</span>
+            <span class="tag-item">공모전 출품</span>
+          </div>
+        </div>
+
+        <!-- 4. 게임 경험 & 분석 데이터 -->
+        <div class="skill-cat-card">
+          <div class="skill-cat-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="12" x="2" y="6" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg>
+            코어 게임 플레이 경험 (4,200시간+)
+          </div>
+
+          <div class="skill-item-block">
+            <span class="skill-item-icon" aria-label="다크소울 3" style="color: #b91c1c; background: #fef2f2; border-color: #fee2e2;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="14.5 17.5 3 6 6 3 17.5 14.5"/>
+                <line x1="13" x2="19" y1="19" y2="13"/>
+                <line x1="16" x2="20" y1="16" y2="20"/>
+                <line x1="19" x2="21" y1="21" y2="19"/>
+              </svg>
+            </span>
+            <div class="skill-item-text-wrap">
+              <h4 class="skill-item-subtitle">다크소울 3 (2,000h) - 정밀 판정 및 레벨 디자인</h4>
+              <p class="skill-item-paragraph">보스 패턴 설계, 정밀한 히트박스, 도전 욕구를 자극하는 긴장감과 보상 체계를 깊이 분석했습니다.</p>
+            </div>
+          </div>
+
+          <div class="skill-item-block">
+            <span class="skill-item-icon" aria-label="스카이림 & F.E.A.R.1" style="color: #059669; background: #ecfdf5; border-color: #d1fae5;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
+              </svg>
+            </span>
+            <div class="skill-item-text-wrap">
+              <h4 class="skill-item-subtitle">스카이림 & F.E.A.R.1 (1,200h) - 월드와 적 AI 메커니즘</h4>
+              <p class="skill-item-paragraph">오픈월드 환경 상호작용과 고도화된 적 행동 트리의 유기적인 전술 인공지능을 체계적으로 연구했습니다.</p>
+            </div>
+          </div>
+
+          <div class="skill-item-block">
+            <span class="skill-item-icon" aria-label="유희왕 마스터듀얼" style="color: #d97706; background: #fffbeb; border-color: #fef3c7;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect width="14" height="20" x="5" y="2" rx="2"/>
+                <line x1="5" x2="19" y1="8" y2="8"/>
+                <circle cx="12" cy="14" r="2"/>
+              </svg>
+            </span>
+            <div class="skill-item-text-wrap">
+              <h4 class="skill-item-subtitle">유희왕 마스터듀얼 (1,000h) - 텍스트 룰과 메타 밸런스</h4>
+              <p class="skill-item-paragraph">엄밀한 텍스트 룰 체계와 덱 간 상성 관계를 데이터 기반으로 분석하고 밸런스 역학을 체득했습니다.</p>
+            </div>
+          </div>
+
+          <div class="tag-cloud">
+            <span class="tag-item">다크소울 3 (2000h)</span>
+            <span class="tag-item">스카이림 (1000h)</span>
+            <span class="tag-item">마스터듀얼 (1000h)</span>
+            <span class="tag-item">F.E.A.R. 1</span>
+            <span class="tag-item">하프라이프 전편</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="page-footer-nav">
+        <button type="button" class="page-nav-link" onclick="navigateTo('motivation')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+          <span>이전: 지원동기</span>
+        </button>
+        <button type="button" class="page-nav-link next" onclick="navigateTo('projects')">
+          <span>다음: 프로젝트 경험</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </button>
+      </div>
+    </article>
+
+
+    <!-- ========================================================
+         PAGE 5: 프로젝트 경험 (Project Experience) - 소제목 & 단락 분리
+         ======================================================== -->
+    <article class="page-panel" id="page-projects">
+      <div class="page-head">
+        <span class="section-tag">PROJECT EXPERIENCE & RETROSPECTIVE</span>
+        <h2 class="section-title">프로젝트 경험</h2>
+        <button class="admin-edit-page-btn" onclick="openAdminEditor('projects')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> 이 페이지 편집</button>
+      </div>
+
+            <!-- ========================================================
+           참여 프로젝트 이미지 슬라이드 (5초 주기 자동 전환)
+           와이어프레임 구조: [참여 프로젝트] 헤더 + 슬라이드 이미지
+           ======================================================== -->
+      <div class="project-slider-container">
+        <div class="project-slider-header">
+          <div class="slider-title-group">
+            <h3 class="slider-main-title">참여 프로젝트</h3>
+            <span class="slider-badge">
+              <span class="blue-dot" style="width:6px; height:6px;"></span>
+              5초 자동 전환
+            </span>
+          </div>
+          <div class="slider-controls-group">
+            <span class="slider-page-counter" id="sliderCounter">1 / 3</span>
+            <div class="slider-arrow-btns">
+              <button type="button" class="slider-arrow-btn" id="sliderPrevBtn" aria-label="이전 이미지">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m15 18-6-6 6-6"/></svg>
+              </button>
+              <button type="button" class="slider-arrow-btn" id="sliderNextBtn" aria-label="다음 이미지">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-slider-frame" id="projectSliderFrame" tabindex="0" aria-label="게임 프로젝트 이미지 슬라이더">
+          <!-- 5초 프로그레스 바 -->
+          <div class="slider-progress-track">
+            <div class="slider-progress-fill" id="sliderProgressFill"></div>
+          </div>
+
+          <div class="slider-slides-wrapper" id="sliderSlidesWrapper">
+            <!-- 슬라이드 1: 라스트 생추어리 -->
+            <div class="slider-slide-item active" data-index="0">
+              <div class="slide-image-backdrop" style="background-image: url('images/slide-last-sanctuary.jpg');"></div>
+              <img class="slide-image-element" src="images/slide-last-sanctuary.jpg" alt="라스트 생추어리 아트워크" loading="eager">
+              <div class="slide-meta-overlay">
+                <div class="slide-meta-badge">PROJECT 01 · 다크 판타지 액션</div>
+                <div class="slide-meta-title">라스트 생추어리</div>
+                <div class="slide-meta-desc">이벤트 조건 분기 및 로직 명세화 / 캐릭터 기획 완수</div>
+              </div>
+            </div>
+
+            <!-- 슬라이드 2: 프로젝트 H -->
+            <div class="slider-slide-item" data-index="1">
+              <div class="slide-image-backdrop" style="background-image: url('images/slide-project-h.jpg');"></div>
+              <img class="slide-image-element" src="images/slide-project-h.jpg" alt="프로젝트 H 캐릭터 원화" loading="lazy">
+              <div class="slide-meta-overlay">
+                <div class="slide-meta-badge">PROJECT 02 · 1인 비주얼노벨</div>
+                <div class="slide-meta-title">프로젝트 H</div>
+                <div class="slide-meta-desc">세계관 설정 및 시나리오 플롯 / 개발자 맞춤형 기획서 도출</div>
+              </div>
+            </div>
+
+            <!-- 슬라이드 3: 시뮬레이션 타이쿤 -->
+            <div class="slider-slide-item" data-index="2">
+              <div class="slide-image-backdrop" style="background-image: url('images/slide-simulation.jpg');"></div>
+              <img class="slide-image-element" src="images/slide-simulation.jpg" alt="타이쿤 시뮬레이션 게임 인게임" loading="lazy">
+              <div class="slide-meta-overlay">
+                <div class="slide-meta-badge">PROJECT 03 · 시스템 & 타이쿤</div>
+                <div class="slide-meta-title">메이플피아 & 타이쿤 시뮬레이션</div>
+                <div class="slide-meta-desc">재배·제조·판매 메커니즘 구축 / 퀘스트 동선 및 경제 밸런싱</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 하단 네비게이션 인디케이터 닷 -->
+          <div class="slider-dot-indicators" id="sliderDotIndicators">
+            <button type="button" class="slider-dot active" data-index="0" aria-label="1번 이미지로 이동"></button>
+            <button type="button" class="slider-dot" data-index="1" aria-label="2번 이미지로 이동"></button>
+            <button type="button" class="slider-dot" data-index="2" aria-label="3번 이미지로 이동"></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="md-edit-zone" id="projects-md-zone" style="display:none;margin-bottom:24px;"></div>
+      <div id="projectsOriginalCards">
+      <!-- 프로젝트 1: 라스트 생추어리 -->
+      <article class="project-card">
+        <div class="project-header">
+          <div class="project-title-wrap">
+            <h3>라스트 생추어리</h3>
+            <span style="font-size: 14px; color: var(--text-smoke);">이벤트 기획 & 캐릭터 기획 지원</span>
+          </div>
+          <span class="project-role-badge">이벤트 로직 협의 및 기획</span>
+        </div>
+
+        <div class="project-sub-section">
+          <h4 class="project-sub-title">📌 개발자 관점의 맞춤형 이벤트 로직 명세</h4>
+          <p class="project-sub-desc">
+            실제 인게임에서 이벤트 로직을 구현하는 프로그래머와 사전에 깊이 있는 협의를 거쳤습니다. 조건 분기, 발생 트리거, 예외 처리 플로우를 명확히 도식화하여 보기 편하고 인게임 구현 누수가 발생하지 않는 최적화 명세서를 산출했습니다.
+          </p>
+        </div>
+
+        <div class="project-sub-section">
+          <h4 class="project-sub-title">📌 팀 위기 극복을 위한 자발적 업무 인수</h4>
+          <p class="project-sub-desc">
+            프로젝트 진행 중 팀원의 건강 악화로 인해 일정 병목 현상이 발생했습니다. 이에 자발적으로 나서서 팀원에게 충분한 휴식을 권유하고, 캐릭터 기획서 작성 업무를 신속히 이어받아 전체 개발 마일스톤을 차질 없이 완수했습니다.
+          </p>
+        </div>
+
+        <div class="takeaway-box">
+          <div class="takeaway-label">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            배운 점 (두괄식 핵심)
+          </div>
+          <p style="font-size: 15px; color: var(--text-graphite); line-height: 1.65; margin: 0;">
+            <strong>"기획서는 내 생각이 아닌 개발자의 작업 환경을 기준으로 씌어져야 한다."</strong><br>
+            문서의 가독성이 팀의 개발 속도를 좌우한다는 점과, 팀원의 위기를 내 일처럼 적극적으로 분담하는 헌신적인 협업 태도가 프로젝트 완주의 핵심 원동력임을 체득했습니다.
+          </p>
+        </div>
+      </article>
+
+      <!-- 프로젝트 2: 프로젝트 H -->
+      <article class="project-card">
+        <div class="project-header">
+          <div class="project-title-wrap">
+            <h3>프로젝트 H</h3>
+            <span style="font-size: 14px; color: var(--text-smoke);">시나리오 기획, 전체 게임 설계 및 엔진 검토</span>
+          </div>
+          <span class="project-role-badge">단독 기획 및 개발자 조율</span>
+        </div>
+
+        <div class="project-sub-section">
+          <h4 class="project-sub-title">📌 초안 공유를 통한 빠른 피드백 루프 가동</h4>
+          <p class="project-sub-desc">
+            1인 기획자로서 방대한 시나리오 기획의 난항을 겪었을 때, 완성을 기다리지 않고 간단한 초안을 먼저 작성하여 개발자에게 전달했습니다. "실제 개발자 본인이 이해하고 인게임에 구현할 수 있는 수준인가?"를 직접 묻고 피드백을 즉시 반영했습니다.
+          </p>
+        </div>
+
+        <div class="project-sub-section">
+          <h4 class="project-sub-title">📌 소통을 통해 도달한 개발 참조 규격</h4>
+          <p class="project-sub-desc">
+            개발자와의 끊임없는 대화와 수정을 거쳐, 개발진이 추가적인 질문 없이 기획서만 보고도 안정적으로 개발에 착수할 수 있는 높은 수준의 시나리오 기획 문서를 최종 완성해냈습니다.
+          </p>
+        </div>
+
+        <div class="takeaway-box">
+          <div class="takeaway-label">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            배운 점 (두괄식 핵심)
+          </div>
+          <p style="font-size: 15px; color: var(--text-graphite); line-height: 1.65; margin: 0;">
+            <strong>"모를 때는 혼자 끙끙 앓지 않고 즉시 질문하며 협의하는 것이 최선의 지름길이다."</strong><br>
+            기획자의 고집을 내려놓고 개발자와 격의 없이 묻고 답하는 과정이야말로 문서의 품질을 최단기간에 끌어올리고 팀의 신뢰를 쌓는 비결임을 배웠습니다.
+          </p>
+        </div>
+      </article>
+
+      <!-- 프로젝트 3: 프로젝트 휴머니즘 -->
+      <article class="project-card">
+        <div class="project-header">
+          <div class="project-title-wrap">
+            <h3>프로젝트 휴머니즘</h3>
+            <span style="font-size: 14px; color: var(--text-smoke);">인게임 시스템 & 콘텐츠 전체 기획</span>
+          </div>
+          <span class="project-role-badge">전체 기획 총괄</span>
+        </div>
+
+        <div class="project-sub-section">
+          <h4 class="project-sub-title">📌 대화를 통한 인게임 실제 구현성 사전 검증</h4>
+          <p class="project-sub-desc">
+            새로운 시스템 콘셉트를 구상할 때 개발자가 직관적으로 이해할 수 있는지, 그리고 인게임 구현이 기술적으로 타당한지를 대화와 조율을 통해 사전에 엄밀하게 검증했습니다.
+          </p>
+        </div>
+
+        <div class="project-sub-section">
+          <h4 class="project-sub-title">📌 팀원 조언 기반의 아이디어 구체화</h4>
+          <p class="project-sub-desc">
+            팀원들에게 적극적으로 의견과 조언을 구했습니다. 여러 관점의 대화를 통해 다소 추상적이었던 아이디어를 구체적인 시스템 명세서로 정밀하게 다듬어 문서화했습니다.
+          </p>
+        </div>
+
+        <div class="takeaway-box">
+          <div class="takeaway-label">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            배운 점 (두괄식 핵심)
+          </div>
+          <p style="font-size: 15px; color: var(--text-graphite); line-height: 1.65; margin: 0;">
+            <strong>"독단적인 기획은 실패하지만, 집단 지성을 모은 기획은 단단해진다."</strong><br>
+            기획자가 아이디어를 혼자 독점하지 않고 조원들의 다양한 시각을 수렴하여 구체화할 때, 팀 전체의 개발 동기부여와 기획의 완성도가 모두 극대화됨을 배웠습니다.
+          </p>
+        </div>
+      </article>
+
+      <!-- 프로젝트 4: 메이플피아 아카데미 -->
+      <article class="project-card">
+        <div class="project-header">
+          <div class="project-title-wrap">
+            <h3>메이플피아 아카데미</h3>
+            <span style="font-size: 14px; color: var(--text-smoke);">퀘스트 콘텐츠 기획</span>
+          </div>
+          <span class="project-role-badge">메인 & 서브 퀘스트 설계</span>
+        </div>
+
+        <div class="project-sub-section">
+          <h4 class="project-sub-title">📌 핵심 플레이 동선을 수립하는 메인 퀘스트</h4>
+          <p class="project-sub-desc">
+            게임의 뼈대를 이루는 메인 퀘스트의 목표 조건과 동기부여가 되는 보상 체계를 명확히 수립하여, 플레이어가 성장 과정에서 몰입감을 유지하도록 설계했습니다.
+          </p>
+        </div>
+
+        <div class="project-sub-section">
+          <h4 class="project-sub-title">📌 세계관 탐색을 유도하는 서브 퀘스트 확장</h4>
+          <p class="project-sub-desc">
+            배경 세계관을 유저가 자연스럽게 체감할 수 있도록 서브 퀘스트 동선과 서사 요소를 유기적으로 배치하여, 탐색의 즐거움과 다양한 인게임 상호작용을 보강했습니다.
+          </p>
+        </div>
+
+        <div class="takeaway-box">
+          <div class="takeaway-label">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            배운 점 (두괄식 핵심)
+          </div>
+          <p style="font-size: 15px; color: var(--text-graphite); line-height: 1.65; margin: 0;">
+            <strong>"퀘스트는 단순한 보상 지급처가 아니라 유저를 세계관으로 이끄는 안내판이다."</strong><br>
+            의미 없는 반복 플레이를 지양하고 플레이어가 퀘스트를 수행하는 타당한 이유를 납득시키는 것이 유저 잔존율에 직결됨을 깨달았습니다.
+          </p>
+        </div>
+      </article>
+
+      <div class="page-footer-nav">
+        <button type="button" class="page-nav-link" onclick="navigateTo('skills')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+          <span>이전: 역량, 기술</span>
+        </button>
+        <button type="button" class="page-nav-link next" onclick="navigateTo('vision')">
+          <span>다음: 목표, 포부</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </button>
+      </div>
+    </article>
+
+
+    <!-- ========================================================
+         PAGE 6: 목표, 포부 (Vision & Goal) - 소제목 & 단락 분리
+         ======================================================== -->
+    <article class="page-panel" id="page-vision">
+      <div class="page-head">
+        <span class="section-tag">VISION & GOAL</span>
+        <h2 class="section-title">목표, 포부</h2>
+        <button class="admin-edit-page-btn" onclick="openAdminEditor('vision')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> 이 페이지 편집</button>
+      </div>
+
+      <!-- 두괄식 리드 박스 -->
+      <div class="lead-box">
+        <div class="lead-title">🎯 "나 혼자가 아닌 동료와 함께, 유저가 진정으로 재미를 느끼는 콘텐츠를 만듭니다."</div>
+        <div class="lead-desc">팀원에게는 가장 편안한 동료가 되고, 유저에게는 잊지 못할 경험을 선사하는 기획자로 성장하겠습니다.</div>
+      </div>
+
+      <!-- 소제목과 단락으로 명확히 구분된 본문 카드 -->
+      <div class="content-card-split">
+        <div class="content-sub-block">
+          <h3 class="content-sub-title">
+            <span class="sub-num-pill">01</span>
+            동료가 일하기 편한 명확하고 친절한 기획
+          </h3>
+          <p class="content-paragraph">
+            기획자 혼자 만족하는 문서를 단호히 거부합니다. 프로그래머, 아티스트와의 끊임없는 협의를 통해 모든 팀원이 의도를 의심 없이 이해할 수 있고, 개발 과정에서 막힘이 없는 투명한 기획서를 만들겠습니다.
+          </p>
+        </div>
+
+        <div class="content-sub-block">
+          <h3 class="content-sub-title">
+            <span class="sub-num-pill">02</span>
+            유저의 심금을 울리는 깊이 있는 콘텐츠 창작
+          </h3>
+          <p class="content-paragraph">
+            탄탄하고 안정적인 시스템적 기반 위에서 유저들이 오랜 시간 몰입하고 진정성 있는 감동을 느낄 수 있는 독창적인 내러티브와 재미있는 콘텐츠를 구현해 내겠습니다.
+          </p>
+        </div>
+
+        <div class="content-sub-block">
+          <h3 class="content-sub-title">
+            <span class="sub-num-pill">03</span>
+            함께 일하고 싶은 든든한 팀플레이어로의 성장
+          </h3>
+          <p class="content-paragraph">
+            다양한 직군의 팀원들과 프로젝트를 수행하며 더 훌륭한 팀원으로서의 자세를 부단히 갖추겠습니다. 귀사에서 함께할 동료들과 함께 재미있는 게임을 완성해 나가는 필수불가결한 기획자로 거듭나겠습니다.
+          </p>
+        </div>
+      </div>
+
+      <div class="page-footer-nav">
+        <button type="button" class="page-nav-link" onclick="navigateTo('projects')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+          <span>이전: 프로젝트 경험</span>
+        </button>
+        <button type="button" class="page-nav-link next" onclick="navigateTo('profile')">
+          <span>처음으로: 인적사항</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </button>
+      </div>
+    </article>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p class="footer-logline">때를 기다리며 타오르는 불씨, 기획자 이동현</p>
+      <p class="footer-copy">
+        Designed based on ElevenLabs Minimal System · Optimized for iOS Safari<br>
+        © 2026 Donghyun Lee. All rights reserved.
+      </p>
+    </footer>
+
+  </main>
+
+  <!-- Floating Scroll Navigator (상·하단 빠른 이동 화살표 컨트롤) -->
+  <aside class="scroll-nav-widget" aria-label="화면 상하단 빠른 이동">
+    <button type="button" class="scroll-nav-btn top" onclick="scrollToTop()" title="최상단으로 이동" aria-label="화면 최상단으로 이동">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 15l-6-6-6 6"/>
+      </svg>
+    </button>
+    <div class="scroll-nav-divider" aria-hidden="true"></div>
+    <button type="button" class="scroll-nav-btn bottom" onclick="scrollToBottom()" title="최하단으로 이동" aria-label="화면 최하단으로 이동">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 9l6 6 6-6"/>
+      </svg>
+    </button>
+  </aside>
+
+  <!-- Mobile Safari Bottom Floating Bar -->
+  <aside class="floating-bar" aria-label="빠른 연락처 바">
+    <div class="floating-info">
+      <span class="blue-dot" aria-hidden="true"></span>
+      <div>
+        <div class="floating-name">이동현 기획자</div>
+        <div class="floating-sub">010-6552-4426</div>
+      </div>
+    </div>
+    <div class="floating-actions">
+      <button class="floating-btn secondary" onclick="copyContact('010-6552-4426')">
+        복사
+      </button>
+      <a href="tel:01065524426" class="floating-btn primary">
+        전화하기
+      </a>
+    </div>
+  </aside>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast" role="status" aria-live="polite">
+    전화번호가 클립보드에 복사되었습니다.
+  </div>
+
+  <script>
+    // -------------------------------------------------------------
+    // Single-Page Tab Routing: 한 항목씩만 표시하는 헤더 네비게이션
+    // -------------------------------------------------------------
+    const PAGES = ['profile', 'weapons', 'motivation', 'skills', 'projects', 'vision'];
+
+    function navigateTo(pageId) {
+      if (!PAGES.includes(pageId)) pageId = 'profile';
+
+      // 1. 헤더 버튼 활성화 상태 갱신
+      document.querySelectorAll('.header-nav-btn').forEach(btn => {
+        const isActive = btn.dataset.page === pageId;
+        btn.classList.toggle('active', isActive);
+        if (isActive) {
+          btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        }
+      });
+
+      // 2. 선택된 항목(페이지 패널)만 활성화 표시
+      document.querySelectorAll('.page-panel').forEach(panel => {
+        panel.classList.toggle('active', panel.id === `page-${pageId}`);
+      });
+
+      // 3. 브라우저 URL 해시 동기화
+      if (window.location.hash !== `#${pageId}`) {
+        history.replaceState(null, '', `#${pageId}`);
+      }
+
+      // 4. 최상단으로 스크롤 이동
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // URL 해시 및 초기 로드 처리
+    window.addEventListener('DOMContentLoaded', () => {
+      const initialHash = window.location.hash.replace('#', '');
+      navigateTo(PAGES.includes(initialHash) ? initialHash : 'profile');
+    });
+
+    window.addEventListener('hashchange', () => {
+      const currentHash = window.location.hash.replace('#', '');
+      if (PAGES.includes(currentHash)) {
+        navigateTo(currentHash);
+      }
+    });
+
+    // -------------------------------------------------------------
+    // 상·하단 빠른 스크롤 이동
+    // -------------------------------------------------------------
+    function scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+
+    function scrollToBottom() {
+      window.scrollTo({
+        top: Math.max(document.body.scrollHeight, document.documentElement.scrollHeight),
+        behavior: 'smooth'
+      });
+    }
+
+    // -------------------------------------------------------------
+    // 연락처 복사 및 토스트 알림
+    // -------------------------------------------------------------
+    function copyContact(text) {
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(showToast).catch(() => fallbackCopy(text));
+      } else {
+        fallbackCopy(text);
+      }
+    }
+
+    function fallbackCopy(text) {
+      const tempInput = document.createElement('input');
+      tempInput.value = text;
+      tempInput.style.position = 'fixed';
+      tempInput.style.left = '-9999px';
+      document.body.appendChild(tempInput);
+      tempInput.focus();
+      tempInput.select();
+      try {
+        document.execCommand('copy');
+        showToast();
+      } catch (err) {
+        alert('연락처: ' + text);
+      }
+      document.body.removeChild(tempInput);
+    }
+
+    function showToast() {
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2200);
+    }
+
+    
+    // -------------------------------------------------------------
+    // 참여 프로젝트 이미지 슬라이더 (5초 자동 진행 & 상호작용)
+    // -------------------------------------------------------------
+    (function initProjectSlider() {
+      const SLIDE_DURATION = 5000; // 5초
+      const UPDATE_INTERVAL = 50;  // 50ms 주기 프로그레스 업데이트
+      
+      const slides = document.querySelectorAll('.slider-slide-item');
+      const dots = document.querySelectorAll('.slider-dot');
+      const counter = document.getElementById('sliderCounter');
+      const prevBtn = document.getElementById('sliderPrevBtn');
+      const nextBtn = document.getElementById('sliderNextBtn');
+      const progressFill = document.getElementById('sliderProgressFill');
+      const frame = document.getElementById('projectSliderFrame');
+
+      if (!slides.length) return;
+
+      let currentIndex = 0;
+      let elapsedTime = 0;
+      let isPaused = false;
+      let timerId = null;
+
+      function updateSlide(newIndex) {
+        currentIndex = (newIndex + slides.length) % slides.length;
+
+        // 슬라이드 활성화
+        slides.forEach((slide, idx) => {
+          slide.classList.toggle('active', idx === currentIndex);
+        });
+
+        // 도트 활성화
+        dots.forEach((dot, idx) => {
+          dot.classList.toggle('active', idx === currentIndex);
+        });
+
+        // 카운터 갱신
+        if (counter) {
+          counter.textContent = `${currentIndex + 1} / ${slides.length}`;
+        }
+
+        // 프로그레스 바 초기화
+        elapsedTime = 0;
+        if (progressFill) {
+          progressFill.style.width = '0%';
+        }
+      }
+
+      function nextSlide() {
+        updateSlide(currentIndex + 1);
+      }
+
+      function prevSlide() {
+        updateSlide(currentIndex - 1);
+      }
+
+      function tick() {
+        // 프로젝트 패널이 활성 상태이고 마우스 오버 상태가 아닐 때만 시간 진행
+        const projectsPanel = document.getElementById('page-projects');
+        const isProjectActive = projectsPanel && projectsPanel.classList.contains('active');
+
+        if (isProjectActive && !isPaused) {
+          elapsedTime += UPDATE_INTERVAL;
+          const progressPercent = Math.min(100, (elapsedTime / SLIDE_DURATION) * 100);
+          if (progressFill) {
+            progressFill.style.width = `${progressPercent}%`;
+          }
+
+          if (elapsedTime >= SLIDE_DURATION) {
+            nextSlide();
+          }
+        }
+      }
+
+      function startTimer() {
+        if (!timerId) {
+          timerId = setInterval(tick, UPDATE_INTERVAL);
+        }
+      }
+
+      function resetAndPlay() {
+        elapsedTime = 0;
+        if (progressFill) progressFill.style.width = '0%';
+      }
+
+      // 이전 / 다음 버튼
+      if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+          nextSlide();
+          resetAndPlay();
+        });
+      }
+
+      if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+          prevSlide();
+          resetAndPlay();
+        });
+      }
+
+      // 인디케이터 클릭 이동
+      dots.forEach((dot, idx) => {
+        dot.addEventListener('click', () => {
+          updateSlide(idx);
+          resetAndPlay();
+        });
+      });
+
+      // 마우스 오버 시 일시 정지 (상세 감상 지원)
+      if (frame) {
+        frame.addEventListener('mouseenter', () => {
+          isPaused = true;
+        });
+        frame.addEventListener('mouseleave', () => {
+          isPaused = false;
+        });
+
+        // 모바일 터치 스와이프 지원
+        let touchStartX = 0;
+        let touchEndX = 0;
+        frame.addEventListener('touchstart', (e) => {
+          touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        frame.addEventListener('touchend', (e) => {
+          touchEndX = e.changedTouches[0].screenX;
+          const diff = touchEndX - touchStartX;
+          if (Math.abs(diff) > 40) {
+            if (diff < 0) {
+              nextSlide();
+            } else {
+              prevSlide();
+            }
+            resetAndPlay();
+          }
+        }, { passive: true });
+
+        // 키보드 좌우 화살표 탐색
+        frame.addEventListener('keydown', (e) => {
+          if (e.key === 'ArrowRight') {
+            nextSlide();
+            resetAndPlay();
+          } else if (e.key === 'ArrowLeft') {
+            prevSlide();
+            resetAndPlay();
+          }
+        });
+      }
+
+      // 최초 실행
+      updateSlide(0);
+      startTimer();
+    })();
+
+
+    // ==========================================================
+    // 관리자 인증 및 마크다운 에디터 시스템
+    // 비밀번호: 1384 | localStorage 영구 저장
+    // ==========================================================
+    const ADMIN_PASSWORD = '1384';
+    const STORAGE_KEY_PREFIX = 'portfolio_md_';
+    let adminLoggedIn = false;
+    let currentEditingPage = null;
+
+    // ---------- 관리자 인증 ----------
+
+    function openAdminLogin() {
+      if (adminLoggedIn) {
+        logoutAdmin();
+        return;
+      }
+      const overlay = document.getElementById('adminLoginOverlay');
+      overlay.classList.add('open');
+      setTimeout(() => {
+        const input = document.getElementById('adminPinInput');
+        if (input) input.focus();
+      }, 80);
+    }
+
+    function closeAdminLogin() {
+      document.getElementById('adminLoginOverlay').classList.remove('open');
+      document.getElementById('adminPinInput').value = '';
+      document.getElementById('adminPinError').textContent = '';
+    }
+
+    function verifyAdminPin() {
+      const input = document.getElementById('adminPinInput');
+      const errEl = document.getElementById('adminPinError');
+      const val = input.value.trim();
+
+      if (val === ADMIN_PASSWORD) {
+        adminLoggedIn = true;
+        document.body.classList.add('admin-mode-active');
+        closeAdminLogin();
+        const btn = document.getElementById('adminToggleBtn');
+        btn.classList.add('logged-in');
+        document.getElementById('adminBtnLabel').textContent = '편집 모드 종료';
+        // 관리자 모드 활성화 알림
+        showAdminToast('✅ 관리자 모드 활성화 완료 (1384)');
+      } else {
+        input.classList.add('error');
+        errEl.textContent = '비밀번호가 올바르지 않습니다.';
+        setTimeout(() => input.classList.remove('error'), 500);
+        input.value = '';
+        input.focus();
+      }
+    }
+
+    function logoutAdmin() {
+      adminLoggedIn = false;
+      document.body.classList.remove('admin-mode-active');
+      const btn = document.getElementById('adminToggleBtn');
+      btn.classList.remove('logged-in');
+      document.getElementById('adminBtnLabel').textContent = '관리자 수정';
+      showAdminToast('편집 모드 종료');
+    }
+
+    function showAdminToast(msg) {
+      const toast = document.getElementById('toast');
+      const origText = toast.textContent;
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => { toast.textContent = origText; }, 300);
+      }, 2200);
+    }
+
+    // ---------- 에디터 모달 ----------
+
+    function openAdminEditor(pageId) {
+      if (!adminLoggedIn) { openAdminLogin(); return; }
+      currentEditingPage = pageId;
+      const overlay = document.getElementById('adminEditorOverlay');
+      const select = document.getElementById('editorTabSelect');
+      select.value = pageId;
+      loadEditorContent(pageId);
+      overlay.classList.add('open');
+    }
+
+    function closeAdminEditor() {
+      document.getElementById('adminEditorOverlay').classList.remove('open');
+    }
+
+    function loadEditorContent(pageId) {
+      currentEditingPage = pageId;
+      const stored = localStorage.getItem(STORAGE_KEY_PREFIX + pageId);
+      const defaultMd = getDefaultMarkdown(pageId);
+      const textarea = document.getElementById('editorTextarea');
+      textarea.value = stored !== null ? stored : defaultMd;
+      updateEditorPreview();
+    }
+
+    function updateEditorPreview() {
+      const md = document.getElementById('editorTextarea').value;
+      const preview = document.getElementById('editorPreviewInner');
+      preview.innerHTML = renderMarkdownToHtml(md);
+    }
+
+    function saveEditorContent() {
+      if (!currentEditingPage) return;
+      const md = document.getElementById('editorTextarea').value;
+      localStorage.setItem(STORAGE_KEY_PREFIX + currentEditingPage, md);
+      applyMarkdownToPage(currentEditingPage, md);
+      closeAdminEditor();
+      showAdminToast('✅ 저장 완료! 페이지에 바로 반영되었습니다.');
+    }
+
+    function resetEditorContent() {
+      if (!currentEditingPage) return;
+      if (!confirm('이 페이지의 내용을 기본값으로 되돌리겠습니까?\n(저장된 수정 내용이 삭제됩니다)')) return;
+      localStorage.removeItem(STORAGE_KEY_PREFIX + currentEditingPage);
+      loadEditorContent(currentEditingPage);
+      applyMarkdownToPage(currentEditingPage, getDefaultMarkdown(currentEditingPage));
+      showAdminToast('🔄 기본값으로 복원되었습니다.');
+    }
+
+    // ---------- 툴바 서식 삽입 ----------
+
+    function insertMdSyntax(before, after) {
+      const ta = document.getElementById('editorTextarea');
+      const start = ta.selectionStart;
+      const end = ta.selectionEnd;
+      const selected = ta.value.substring(start, end);
+      const replacement = before + selected + after;
+      ta.setRangeText(replacement, start, end, 'select');
+      ta.focus();
+      updateEditorPreview();
+    }
+
+    // ---------- 경량 마크다운 파서 ----------
+
+    function renderMarkdownToHtml(md) {
+      const lines = md.split('\n');
+      let html = '';
+      let inList = false;
+      let h2Counter = 0;
+
+      for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+
+        // 수평선
+        if (/^---+$/.test(line.trim())) {
+          if (inList) { html += '</ul>'; inList = false; }
+          html += '<hr class="prev-hr">';
+          continue;
+        }
+        // ## 소제목 (순번 자동)
+        if (line.startsWith('## ')) {
+          if (inList) { html += '</ul>'; inList = false; }
+          h2Counter++;
+          const title = applyInline(line.slice(3));
+          html += `<div class="prev-h2"><span class="prev-num-pill">0${h2Counter}</span>${title}</div>`;
+          continue;
+        }
+        // ### 부제목
+        if (line.startsWith('### ')) {
+          if (inList) { html += '</ul>'; inList = false; }
+          html += `<div class="prev-h3">${applyInline(line.slice(4))}</div>`;
+          continue;
+        }
+        // > 인용 (리드박스)
+        if (line.startsWith('> ')) {
+          if (inList) { html += '</ul>'; inList = false; }
+          html += `<div class="prev-lead-box">${applyInline(line.slice(2))}</div>`;
+          continue;
+        }
+        // - 목록
+        if (line.startsWith('- ')) {
+          if (!inList) { html += '<ul style="list-style:none;padding:0;margin:0 0 12px 0">'; inList = true; }
+          html += `<li class="prev-li">${applyInline(line.slice(2))}</li>`;
+          continue;
+        }
+        // 빈 줄
+        if (line.trim() === '') {
+          if (inList) { html += '</ul>'; inList = false; }
+          continue;
+        }
+        // 일반 단락
+        if (inList) { html += '</ul>'; inList = false; }
+        html += `<p class="prev-p">${applyInline(line)}</p>`;
+      }
+      if (inList) html += '</ul>';
+      return html;
+    }
+
+    function applyInline(text) {
+      return text
+        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.+?)\*/g, '<em>$1</em>')
+        .replace(/`(.+?)`/g, '<code style="background:#f0f0f0;padding:1px 5px;border-radius:4px;font-family:monospace;font-size:0.93em">$1</code>');
+    }
+
+    // ---------- 마크다운을 실제 페이지 DOM에 반영 ----------
+
+    function applyMarkdownToPage(pageId, md) {
+      const panel = document.getElementById('page-' + pageId);
+      if (!panel) return;
+
+      const isDefault = (md.trim() === getDefaultMarkdown(pageId).trim());
+
+      if (pageId === 'motivation' || pageId === 'vision') {
+        const cardSplit = panel.querySelector('.content-card-split');
+        if (cardSplit) {
+          cardSplit.innerHTML = renderMarkdownToDesignHtml(md);
+        }
+      } else if (pageId === 'weapons') {
+        const zone = document.getElementById('weapons-md-zone');
+        const orig = document.getElementById('weaponsOriginalGrid');
+        if (zone && orig) {
+          if (isDefault) {
+            zone.style.display = 'none';
+            orig.style.display = 'grid';
+          } else {
+            zone.innerHTML = renderMarkdownToDesignHtml(md);
+            zone.style.display = 'block';
+            orig.style.display = 'none';
+          }
+        }
+      } else if (pageId === 'skills') {
+        const zone = document.getElementById('skills-md-zone');
+        const orig = document.getElementById('skillsOriginalGrid');
+        if (zone && orig) {
+          if (isDefault) {
+            zone.style.display = 'none';
+            orig.style.display = 'grid';
+          } else {
+            zone.innerHTML = renderMarkdownToDesignHtml(md);
+            zone.style.display = 'block';
+            orig.style.display = 'none';
+          }
+        }
+      } else if (pageId === 'projects') {
+        const zone = document.getElementById('projects-md-zone');
+        const orig = document.getElementById('projectsOriginalCards');
+        if (zone && orig) {
+          if (isDefault) {
+            zone.style.display = 'none';
+            orig.style.display = 'block';
+          } else {
+            zone.innerHTML = renderMarkdownToDesignHtml(md);
+            zone.style.display = 'block';
+            orig.style.display = 'none';
+          }
+        }
+      } else if (pageId === 'profile') {
+        const zone = document.getElementById('profile-md-zone');
+        if (zone) {
+          if (isDefault) {
+            zone.innerHTML = '';
+            zone.style.display = 'none';
+          } else {
+            zone.innerHTML = renderMarkdownToDesignHtml(md);
+            zone.style.display = 'block';
+          }
+        }
+      }
+    }
+
+    function renderMarkdownToDesignHtml(md) {
+      const lines = md.split('\n');
+      let html = '<div class="content-card-split">';
+      let inList = false;
+      let h2Counter = 0;
+      let pendingH2 = null;
+      let pendingParagraphs = [];
+
+      function flushBlock() {
+        if (pendingH2 !== null) {
+          const subHtml = pendingParagraphs.map(p =>
+            `<p class="content-paragraph">${p}</p>`
+          ).join('');
+          const num = String(h2Counter).padStart(2, '0');
+          html += `<div class="content-sub-block">
+            <h3 class="content-sub-title">
+              <span class="sub-num-pill">${num}</span>
+              ${pendingH2}
+            </h3>
+            ${subHtml}
+          </div>`;
+          pendingH2 = null;
+          pendingParagraphs = [];
+        }
+      }
+
+      for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+        if (/^---+$/.test(line.trim())) {
+          flushBlock();
+          continue;
+        }
+        if (line.startsWith('## ')) {
+          flushBlock();
+          h2Counter++;
+          pendingH2 = applyInline(line.slice(3));
+          continue;
+        }
+        if (line.startsWith('> ')) {
+          flushBlock();
+          html += `<div class="lead-box" style="margin-bottom:18px;"><div class="lead-desc">${applyInline(line.slice(2))}</div></div>`;
+          continue;
+        }
+        if (line.startsWith('- ')) {
+          if (pendingH2 !== null) {
+            pendingParagraphs.push('• ' + applyInline(line.slice(2)));
+          } else {
+            if (!inList) { html += '<ul style="list-style:none;padding-left:14px;margin-bottom:14px">'; inList = true; }
+            html += `<li style="margin-bottom:6px;color:var(--text-smoke)">${applyInline(line.slice(2))}</li>`;
+          }
+          continue;
+        }
+        if (line.trim() === '') {
+          if (inList) { html += '</ul>'; inList = false; }
+          continue;
+        }
+        if (inList) { html += '</ul>'; inList = false; }
+        if (pendingH2 !== null) {
+          pendingParagraphs.push(applyInline(line));
+        } else {
+          html += `<p class="content-paragraph">${applyInline(line)}</p>`;
+        }
+      }
+      flushBlock();
+      if (inList) html += '</ul>';
+      html += '</div>';
+      return html;
+    }
+
+    // ---------- 페이지 로드 시 저장된 내용 적용 ----------
+
+    function applyStoredMarkdowns() {
+      const pages = ['profile','weapons','motivation','skills','projects','vision'];
+      pages.forEach(pageId => {
+        const stored = localStorage.getItem(STORAGE_KEY_PREFIX + pageId);
+        if (stored) {
+          applyMarkdownToPage(pageId, stored);
+        }
+      });
+    }
+
+    // ---------- 기본 마크다운 정의 (각 탭 기본 콘텐츠 완비) ----------
+
+    function getDefaultMarkdown(pageId) {
+      const defaults = {
+        motivation: `> 🔥 "거대한 불꽃과 같은 귀사에서, 작은 불씨를 던져 함께 활활 타오르고자 합니다."
+
+## 기회를 엿보며 내실을 다져온 불씨의 여정
+저는 어릴 적부터 지금까지 성실히 때를 준비하며 기회를 엿보아온 사람입니다. 게임 업계의 수많은 성공 신화 역시 작은 불씨를 끝까지 포기하지 않고 지켜내어 마침내 활활 피워 올린 도전의 결과라고 확신합니다. 저 역시 묵묵히 내실을 다지며 때를 기다려 왔습니다.
+
+## 기본기부터 탄탄한 콘텐츠 기획자로의 출발
+궁극적으로는 유저들의 심금을 울리는 서사를 빚어내는 시나리오 기획자가 되는 것이 저의 오랜 꿈입니다. 하지만 그 꿈에 도달하기에 앞서, 소중한 기회를 주신 귀사에서 시스템과 콘텐츠 기획의 가장 본질적인 기본기부터 충실히 다지며 성장해 나가는 것이 올바른 시작이라고 굳게 믿고 있습니다.
+
+## 지원을 위해 준비해 온 실전 협업 기술
+귀사에 지원하기 위해 다양한 실무 기술을 꾸준히 연마해 왔습니다. MS Office를 활용한 데이터 설계 및 명세서 문서화, Unity 엔진 환경 적응, 최신 생성형 AI 기술을 활용한 리서치 효율화, 그리고 다수의 프로젝트를 통해 협업의 기본기를 단단히 다졌습니다.
+
+## 겸손한 자각과 아낌없는 헌신
+스스로 아직 채워야 할 점이 많은 신입임을 냉철하게 인지하고 있습니다. 선배 동료들의 조언을 스펀지처럼 흡수하며 빠르게 성장하겠습니다. 거대한 불꽃과도 같은 귀사와 함께한다면, 작은 불씨 같은 제 자신을 한몸 던져 프로젝트를 위해 활활 타오를 수 있기를 간절히 희망합니다.`,
+
+        vision: `> 🎯 "나 혼자가 아닌 동료와 함께, 유저가 진정으로 재미를 느끼는 콘텐츠를 만듭니다."
+
+## 동료가 일하기 편한 명확하고 친절한 기획
+기획자 혼자 만족하는 문서를 단호히 거부합니다. 프로그래머, 아티스트와의 끊임없는 협의를 통해 모든 팀원이 의도를 의심 없이 이해할 수 있고, 개발 과정에서 막힘이 없는 투명한 기획서를 만들겠습니다.
+
+## 유저의 심금을 울리는 깊이 있는 콘텐츠 창작
+탄탄하고 안정적인 시스템적 기반 위에서 유저들이 오랜 시간 몰입하고 진정성 있는 감동을 느낄 수 있는 독창적인 내러티브와 재미있는 콘텐츠를 구현해 내겠습니다.
+
+## 함께 일하고 싶은 든든한 팀플레이어로의 성장
+다양한 직군의 팀원들과 프로젝트를 수행하며 더 훌륭한 팀원으로서의 자세를 부단히 갖추겠습니다. 귀사에서 함께할 동료들과 함께 재미있는 게임을 완성해 나가는 필수불가결한 기획자로 거듭나겠습니다.`,
+
+        weapons: `> 💡 단순한 상상에 그치지 않고 개발자가 이해하고 구현 가능한 기획서를 작성하며, 팀원의 공백까지 메우는 주도적 실행력을 갖추고 있습니다.
+
+## 개발자 맞춤형 기획 설계
+엔지니어의 시각을 반영하여 조건 분기, 발생 트리거, 예외 처리 등을 빠짐없이 도식화하고, 구현 난이도와 일정을 고려한 최적의 시스템 명세서를 산출합니다.
+
+## 스토리 & 세계관 구조 설계 특화
+단순 텍스트 나열을 넘어 인게임 시스템 및 아트 리소스와 유기적으로 결합되는 촘촘한 세계관과 몰입도 높은 퀘스트 서사 구조를 기획합니다.
+
+## 주도적인 팀원 케어
+프로젝트 병목이 발생할 때 팀원의 업무를 자발적으로 인수 분담하여 일정 누수를 방지하고 건강한 협업 환경을 주도적으로 만듭니다.
+
+## 깊이 있게 플레이한 게임 분석
+다크소울 3(2,000시간), 하스스톤(마스터), 원신 등 다양한 장르의 하드코어 플레이 경험을 바탕으로 시스템의 재미 본질과 유저 심리를 분석합니다.
+
+## 실무 도구 및 최신 기술 사용 경험
+Excel 함수·수식, Word, PowerPoint 기획서 문서화는 물론, Unity 엔진 구조 이해 및 생성형 AI 프롬프트 엔지니어링을 실무에 적극 도입합니다.
+
+## 콘텐츠 특화 기획 경험
+이벤트 로직, 시나리오 플롯, 시뮬레이션 시스템 기획 등 장르를 넘나드는 포트폴리오를 통해 검증된 다각도의 콘텐츠 설계 역량을 보유하고 있습니다.`,
+
+        skills: `> ⚡ 소통 기반의 협업과 실무 툴, 하드코어 플레이 경험의 결합
+
+## 실무 기획 & 데이터 설계 도구
+- **MS Excel 데이터 테이블 설계**: 함수/수식 기반 밸런싱 시트 및 데이터 테이블 구축 (컴퓨터활용능력 2급)
+- **MS Word / PowerPoint**: 개발자 맞춤형 시스템 명세서, 와이어프레임 및 피치 덱 문서화
+- **Unity Engine**: 에디터 환경 적응, 컴포넌트 구조 이해 및 프로그래머와의 긴밀한 커뮤니케이션
+- **생성형 AI 기술 활용**: 시나리오 브레인스토밍, 레퍼런스 리서치 속도 300% 향상
+
+## 협업 프로세스 & 태그
+- **개발자 맞춤형 기획**: 개발 구현성을 최우선으로 고려한 조건문/트리거 명세
+- **선제적 업무 인수**: 동료의 공백을 메우는 자발적 책임감과 일정 준수
+- **수평적 피드백 수용**: 다양한 직군의 피드백을 빠르게 반영하는 유연한 소통 태도
+
+## 게이머 DNA & 분석 역량
+- **다크소울 3 (2,000시간)**: 소울라이크 레벨 디자인, 보스 패턴 및 전투 밸런스 심층 분석
+- **하스스톤 (다이아 / 마스터)**: TCG 덱 빌딩 매커니즘 및 메타 순환 구조 체득
+- **다양한 장르 경험**: RPG, 시뮬레이션, 서브컬처 등 유저 선호 트렌드 파악`,
+
+        projects: `> 📌 참여 프로젝트별 핵심 기여 내용 및 배운 점을 정리한 회고록입니다.
+
+## 라스트 생추어리 (다크 판타지 액션)
+- **역할**: 이벤트 로직 협의 및 기획 / 캐릭터 기획 완수
+- **개발자 맞춤형 이벤트 로직 명세**: 프로그래머와 사전에 깊이 있는 협의를 거쳐 조건 분기, 발생 트리거, 예외 처리 플로우를 명확히 도식화
+- **팀 위기 극복을 위한 자발적 업무 인수**: 팀원의 건강 악화로 인한 병목 시 캐릭터 기획서 업무를 자발적으로 인수하여 마일스톤 완수
+- **배운 점**: "기획서는 내 생각이 아닌 개발자의 작업 환경을 기준으로 씌어져야 한다."
+
+## 프로젝트 H (1인 비주얼노벨)
+- **역할**: 세계관 설정 및 시나리오 플롯 / 개발자 맞춤형 기획서 도출
+- **개발자 맞춤형 스크립트 구조화**: 비주얼노벨 엔진 및 스크립트 플로우 차트를 체계화하여 연출과 대사 분기 명세
+- **배운 점**: "내러티브는 텍스트가 아닌 플레이어의 감정 곡선과 시스템으로 전달된다."
+
+## 현실 기반 생존 시뮬레이션 타이쿤
+- **역할**: 시스템 루프 설계 및 자원 밸런싱 기획
+- **핵심 루프 구축**: 생존과 경영 요소가 유기적으로 맞물리는 코어 게임 루프 기획
+- **배운 점**: "단순 수치 계산보다 유저가 체감하는 동기부여와 의사결정의 무게감이 밸런스의 본질이다."`,
+
+        profile: `> 기회를 엿보며 타오를 날만을 기다리는 불씨와도 같은 기획자
+
+## 자기소개 & 기획 철학
+성실히 기본기를 다지며 기회를 준비해 온 게임 시스템 & 콘텐츠 기획자 지망생 이동현입니다.
+동료 개발자가 막힘없이 구현할 수 있는 친절하고 명확한 기획서를 지향하며, 팀의 성공을 위해 작은 불씨처럼 기꺼이 헌신할 준비가 되어 있습니다.`,
+      };
+      return defaults[pageId] || '# 내용을 여기에 입력하세요';
+    }
+
+    // 페이지 로드 완료 후 저장 내용 자동 적용
+    document.addEventListener('DOMContentLoaded', () => {
+      applyStoredMarkdowns();
+    });
+
+    // iOS Safari Touch 최적화
+    document.addEventListener('touchstart', function() {}, {passive: true});
+  </script>
+
+  <!-- ========================================================
+       관리자 로그인 모달
+  ======================================================== -->
+  <div class="admin-modal-overlay" id="adminLoginOverlay">
+    <div class="admin-login-modal">
+      <div class="admin-login-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <div class="admin-login-title">관리자 인증</div>
+      <div class="admin-login-desc">포트폴리오 직접 편집 모드에 접근하려면<br>관리자 비밀번호를 입력해주세요.</div>
+      <div class="admin-pin-input-wrap">
+        <input
+          type="password"
+          id="adminPinInput"
+          class="admin-pin-input"
+          inputmode="numeric"
+          maxlength="10"
+          placeholder="••••"
+          autocomplete="off"
+          onkeydown="if(event.key==='Enter') verifyAdminPin()"
+        >
+      </div>
+      <div class="admin-pin-error-msg" id="adminPinError"></div>
+      <button class="admin-login-btn" onclick="verifyAdminPin()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:inline-block;vertical-align:-3px;margin-right:5px"><polyline points="20 6 9 17 4 12"/></svg>
+        확인 및 편집 모드 시작
+      </button>
+      <button class="admin-cancel-link" onclick="closeAdminLogin()">취소</button>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       마크다운 에디터 모달
+  ======================================================== -->
+  <div class="admin-modal-overlay" id="adminEditorOverlay">
+    <div class="admin-editor-modal">
+      <div class="editor-modal-header">
+        <span class="editor-modal-header-title">✏️ 페이지 내용 직접 편집</span>
+        <select class="editor-tab-select" id="editorTabSelect" onchange="loadEditorContent(this.value)">
+          <option value="profile">인적사항</option>
+          <option value="weapons">핵심 무기</option>
+          <option value="motivation">지원 동기</option>
+          <option value="skills">역량, 기술</option>
+          <option value="projects">프로젝트 경험</option>
+          <option value="vision">목표, 포부</option>
+        </select>
+        <span class="editor-modal-spacer"></span>
+        <button class="editor-reset-btn" onclick="resetEditorContent()">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.95"/></svg>
+          기본값 복원
+        </button>
+        <button class="editor-close-btn" onclick="closeAdminEditor()">✕</button>
+      </div>
+
+      <div class="editor-toolbar">
+        <span class="editor-toolbar-label">서식</span>
+        <button class="toolbar-btn" onclick="insertMdSyntax('## ', '')">## 소제목</button>
+        <button class="toolbar-btn" onclick="insertMdSyntax('### ', '')">### 부제목</button>
+        <button class="toolbar-btn" onclick="insertMdSyntax('> ', '')"> > 리드문</button>
+        <button class="toolbar-btn" onclick="insertMdSyntax('- ', '')">- 목록</button>
+        <button class="toolbar-btn" onclick="insertMdSyntax('**', '**')"><strong>굵게</strong></button>
+        <button class="toolbar-btn" onclick="insertMdSyntax('*', '*')"><em>기울임</em></button>
+        <button class="toolbar-btn" onclick="insertMdSyntax('📌 ', '')">📌</button>
+        <button class="toolbar-btn" onclick="insertMdSyntax('\n---\n', '')">― 구분선</button>
+      </div>
+
+      <div class="editor-body">
+        <div class="editor-input-pane">
+          <div class="editor-pane-label">✏ 마크다운 입력</div>
+          <textarea class="editor-textarea" id="editorTextarea" placeholder="마크다운 형식으로 내용을 작성하세요.&#10;&#10;## 소제목&#10;본문 단락...&#10;&#10;> 인용/리드박스&#10;&#10;- 목록 항목" oninput="updateEditorPreview()"></textarea>
+        </div>
+        <div class="editor-preview-pane">
+          <div class="editor-pane-label">👁 실시간 미리보기</div>
+          <div class="editor-preview-inner" id="editorPreviewInner"></div>
+        </div>
+      </div>
+
+      <div class="editor-modal-footer">
+        <button class="editor-cancel-btn" onclick="closeAdminEditor()">취소</button>
+        <button class="editor-save-btn" onclick="saveEditorContent()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:inline-block;vertical-align:-3px;margin-right:5px"><polyline points="20 6 9 17 4 12"/></svg>
+          저장 및 적용
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 관리자 모드 활성 알림 배너 -->
+  <div class="admin-active-bar" id="adminActiveBar">🔑 관리자 편집 모드 — 각 탭의 "이 페이지 편집" 버튼을 클릭하세요</div>
+
+</body>
+</html>
